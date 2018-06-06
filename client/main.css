@@ -1,0 +1,35 @@
+/* CSS declarations go here */
+.table{
+  margin: 10px auto;
+  float: none;
+}
+.loading{
+  display:inline-block;
+  width:100px;
+  height:100px;
+  background-image:url('loading-spinner.gif');
+  background-repeat:no-repeat;
+  background-position:center;
+  background-color:transparent;
+  background-size: contain;
+  vertical-align:middle;
+}
+.center-screen{
+  transform-origin: 50%;
+  transform: translate(-50%,-50%);
+  position:fixed;
+  left:50%;
+  top:50%;
+}
+
+i.icon-action{
+  cursor: pointer;
+}
+i.icon-red:not(:hover) {
+  opacity: 0.2;
+  color: red;
+}
+i.icon-red:hover {
+  opacity: 1;
+  color: red;
+}
