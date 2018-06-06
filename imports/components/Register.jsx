@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import * as RLocalStorage from 'meteor/simply:reactive-local-storage';
 
-export default class Login extends Component{
+export default class Register extends Component{
   constructor(props){
     super(props);
     // STATE:

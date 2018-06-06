@@ -22,7 +22,6 @@ Meteor.methods({
         }
         else{
           var passwordcrypted = NodeCrypto.encrypt(password);
-          var createdAt = parseInt(new Date().getTime()/1000);
           var user = Users.insert({
             username: username,
             email: email,
@@ -145,6 +144,51 @@ Meteor.methods({
       throw new Meteor.Error(error);
     }
     return result;
+  },
+  /**
+   * @param
+   *  email @required
+   *  oldPassword @required
+   *  newPassword @required
+   * @returns
+   *  1 if success
+   */
+  'changePassword': function(email,oldPassword,newPassword){
+    try{
+      if(!email || !oldPassword || !newPassword){
+        throw {serverErrorMsg: "Email, old password and new password are required"};
+      }
+      var checkUser = Users.findOne({"email":email});
+      if(!checkUser){
+        throw {serverErrorMsg: "INVALID_EMAIL"};
+      }
+      else{
+        var passwordcrypted = checkUser.password;
+        try{
+          NodeCrypto.decrypt(oldPassword,passwordcrypted);
+        }
+        catch(error){
+          throw {serverErrorMsg: "INVALID_PASSWORD"};
+        }
+        var passwordcrypted = NodeCrypto.encrypt(newPassword);
+        var user = Users.update({"email":email},{$set:{
+          password: passwordcrypted,
+        }});
+        return jwt.sign({email,passwordcrypted}, NodeCrypto.secretkey, { expiresIn: '1h' });
+      }
+    }
+    catch(error){
+      console.log(">> ERROR: createUser: ",error)
+      if(error.serverErrorMsg){
+        throw new Meteor.Error(error);
+      }
+      else if(error.error){
+        throw new Meteor.Error(error.error);
+      }
+      else{
+        throw new Meteor.Error({mongoErrorMsg: error});
+      }
+    }
   },
   /**
    * @param

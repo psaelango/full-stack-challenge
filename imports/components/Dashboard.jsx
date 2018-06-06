@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import * as RLocalStorage from 'meteor/simply:reactive-local-storage';
 import { withTracker } from 'meteor/react-meteor-data';
+import ChageCreds from './ChageCreds'
 
 class Dashboard extends Component{
   constructor(props){
@@ -122,6 +123,9 @@ class Dashboard extends Component{
     }
     return(
       <div className="col-sm-12" style={{textAlign:"center"}}>
+        <div className="row">
+          <ChageCreds currentEmail={this.props.currentEmail}/>
+        </div>
         <div className="row">
           <table className="table table-striped table-bordered">
             <thead>

@@ -42,7 +42,7 @@ class MultiSelectField extends Component{
 					simpleValue
 					onChange={this.handleSelectChange}
 					options={this.props.options}
-					placeholder="Select your favourite(s)"
+					placeholder={"Assign feedback to "+this.props.currentEmail}
 					value={this.props.assigned}
 				/>
 		);
